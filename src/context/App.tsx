@@ -129,13 +129,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const validateToken = useCallback(
     async ({token, hostname}: AuthTokenOptions) => {
-     const url = generateGitHubAPIUrl(hostname) + "notifications";
-     await apiRequestAuth(url, 'HEAD', token);
-     const updatedAccounts = addAccount(accounts, token, hostname);
-     setAccounts(updatedAccounts);
-     saveState(updatedAccounts, settings);
-   },
-   [accounts, settings]
+      const url = generateGitHubAPIUrl(hostname) + "notifications";
+      await apiRequestAuth(url, 'HEAD', token);
+      const updatedAccounts = addAccount(accounts, token, hostname);
+      setAccounts(updatedAccounts);
+      saveState(updatedAccounts, settings);
+    },
+    [accounts, settings]
   );
 
   const logout = useCallback(() => {
