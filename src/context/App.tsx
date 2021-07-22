@@ -21,6 +21,7 @@ import { setAppearance } from '../utils/appearance';
 import { setAutoLaunch } from '../utils/comms';
 import { useInterval } from '../hooks/useInterval';
 import { useNotifications } from '../hooks/useNotifications';
+import {generateGitHubAPIUrl} from "../utils/helpers";
 
 const defaultAccounts: AuthState = {
   token: null,
@@ -127,12 +128,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const validateToken = useCallback(
-    async ({ token, hostname }: AuthTokenOptions) => {
-      await apiRequestAuth(
-        `https://api.${hostname}/notifications`,
-        'HEAD',
-        token
-      );
+    async ({token, hostname}: AuthTokenOptions) => {
+      const url = generateGitHubAPIUrl(hostname) + "notifications";
+      await apiRequestAuth(url, 'HEAD', token);
       const updatedAccounts = addAccount(accounts, token, hostname);
       setAccounts(updatedAccounts);
       saveState(updatedAccounts, settings);
